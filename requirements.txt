@@ -1,0 +1,4 @@
+Django==1.6
+gunicorn==18.0
+honcho==0.5.0
+wsgiref==0.1.2
