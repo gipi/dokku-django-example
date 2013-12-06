@@ -65,3 +65,14 @@ It is also possible to execute dokku command directly using ssh, for example
     2013-12-05 15:58:23 [11] [INFO] Using worker: sync
     2013-12-05 15:58:23 [16] [INFO] Booting worker with pid: 16
     Connection to 127.0.0.1 closed.
+
+LOCAL DEVELOPMENT
+-----------------
+
+Since we want to use the same approach of the heroku applications, we
+use ``honcho`` as ```Foreman`` replacement, so is enough to launch the
+following command
+
+    $ honcho start
+
+from the root directory of the project.

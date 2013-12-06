@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+ADMINS = (
+    ('The mighty Admin', 'admin@example.com'),
+)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -36,7 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
+    'kombu.transport.django',
     'gunicorn',
+    'fibonacci',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -82,6 +89,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# https://pypi.python.org/pypi/django-celery
+#celery stuffs
+import djcelery
+djcelery.setup_loader()
+
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
+CELERY_SEND_TASK_ERROR_EMAILS = True
+
+BROKER_URL = 'django://'
+
+# EMAIL ON THE CONSOLE PLISSSS
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -118,6 +139,11 @@ LOGGING = {
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
+            'propagate': False,
+        },
+        'tasks_info' : {
+            'handlers': ['console',],
+            'level': 'DEBUG',
             'propagate': False,
         },
     }
