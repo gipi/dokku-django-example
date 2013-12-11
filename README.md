@@ -66,6 +66,14 @@ It is also possible to execute dokku command directly using ssh, for example
     2013-12-05 15:58:23 [16] [INFO] Booting worker with pid: 16
     Connection to 127.0.0.1 closed.
 
+Dokku use only the ``web`` voice into the ``Procfile``, if you want an approach
+like ``heroku`` you can use ``dokku-shoreman``.
+
+Furthemore ``celery`` complains about running it as root, so to make it works you
+have to configure the ``C_FORCE_ROOT`` environment variable:
+
+    $ ssh -t dokku@vagrant config:set elipse C_FORCE_ROOT=1
+
 LOCAL DEVELOPMENT
 -----------------
 
